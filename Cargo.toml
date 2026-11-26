@@ -1,0 +1,46 @@
+[package]
+name = "waish"
+version = "0.1.0"
+edition = "2021"
+authors = ["aozocchi"]
+description = "Sovereign Unix Waifu Companion & System Automation Shell"
+
+[dependencies]
+# CLI & Terminal Interface
+clap = { version = "4.5", features = ["derive"] }
+rustyline = "14.0"                  # Line editor dengan history
+crossterm = "0.27"                  # Terminal styling & ANSI manipulation
+indicatif = "0.17"                  # Progress bar minimalis
+colored = "2.1"
+inquire = "0.7"                     # TUI Prompt untuk Setup Wizard
+
+# Async & HTTP Engine
+tokio = { version = "1.37", features = ["full"] }
+zbus = { version = "6.3", default-features = false, features = ["tokio-multithread", "proxy"] }
+# rustls dipilih (bukan OpenSSL) agar tetap sejalan dengan target single static binary.
+reqwest = { version = "0.12", default-features = false, features = ["json", "stream", "rustls-tls"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+toml = "0.8"
+
+# System, PTY, & Environment
+portable-pty = "0.8"
+notify-rust = "4.11"
+regex = "1.10"
+dirs = "5.0"
+chrono = "0.4"
+
+# Tambahan kecil (Fase 1)
+libc = "0.2"                       
+unicode-width = "0.1"               # Lebar kolom akurat (kaomoji/CJK) untuk border ASCII
+
+# Native Universal Document Engine (Fase 3)
+rust_xlsxwriter = "0.104"
+calamine = "0.38"
+docx-rs = { version = "0.4.22", default-features = false }
+pdf-extract = "0.12"
+
+[profile.release]
+lto = true
+codegen-units = 1
+strip = true
